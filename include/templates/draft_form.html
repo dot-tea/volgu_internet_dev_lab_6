@@ -1,0 +1,12 @@
+<div class="card my-4">
+    <h5 class="card-header">Пишите пост снизу:</h5>
+    <div class="card-body">
+      <form method="post" action="/cabinet/blog/post_handler.php">
+        <div class="form-group">
+          <input type="text" class="form-control" name="title">
+          <textarea class="form-control" rows="3" name="content"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" name="action" value="add_draft">Отправить</button>
+      </form>
+    </div>
+  </div>
