@@ -94,11 +94,14 @@
 				</div>
 			</form><br><br>
 		<?php
+			//This code handles the "view unpublished posts" mode
 			if (isset($_GET['unreleased_posts']) && 'view' === $_GET['unreleased_posts'] && 'director' === $permission) {
+				
 				echo "Здесь будут отображаться посты, которые вы ещё не опубликовали в блоге.<br>";
 				
-				include_once($_SERVER['DOCUMENT_ROOT'].'/cabinet/blog/text_ru_api.php');
+				include_once($_SERVER['DOCUMENT_ROOT'].'/cabinet/blog/text_ru_api.php'); 
 				echo "Ваш баланс символов: ".check_balance()."<br>";
+				//Error catcher for API functions failure
 				if (isset($_GET['check_error'])) {
 					if ($_GET['check_error'] === '3') {
 						echo '<p style="color: red;">Ошибка запроса на сервер: ошибка при запросе к БД</p>';
@@ -112,7 +115,7 @@
 						echo '<br>Описание ошибки: '.$_SESSION['check_err_desc'];
 					}
 				}
-
+				//On successful recieving of spelling errors, display them
 				if (isset($_GET['view_check']) && $_GET['view_check'] === 'true') {
 					$spell_check = json_decode($_SESSION['spell_check']);
 					echo '
@@ -138,16 +141,19 @@
 					echo '<br>';
 				}
 				
+				//Loads all unreleased posts
 				include_once($_SERVER['DOCUMENT_ROOT'].'/cabinet/blog/blog_db_operations.php');
 				show_unreleased_blogposts();
-
+				
+				//Adds draft form to add new one
 				include_once($_SERVER['DOCUMENT_ROOT'].'/include/templates/draft_form.html');
 
 				echo '<a href="/cabinet/my_cabinet.php">Вернуться в кабинет</a>';
 				include_once($_SERVER['DOCUMENT_ROOT'].'/include/templates/footer.html');
 				exit;
 			}
-			include_once($_SERVER['DOCUMENT_ROOT'].'/cabinet/search_interface.php');
+			//End of "view unpublished posts" mode
+			include_once($_SERVER['DOCUMENT_ROOT'].'/cabinet/search_interface.php'); //loads search interface
 			//switch_table.php error catcher
 			if (isset($_GET['switch_error'])) {
 				switch ($_GET['switch_error']) {
